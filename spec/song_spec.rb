@@ -34,7 +34,7 @@ describe "Song" do
     it 'creates table for songs' do
       Song.create_table
       table_check_sql = "SELECT tbl_name FROM sqlite_master WHERE type='table' AND tbl_name='songs';"
-      expect(DB[:conn].execute(table_check_sql)[0]).to eql(['songs'])
+      expect(DB[:conn].execute(table_check_sql)[0]['tbl_name']).to eql('songs')
     end
   end
 
@@ -64,7 +64,7 @@ describe "Song" do
     end
     it 'takes a hash of attributes and creates new song object, uses save to save it to song table' do
       Song.create(name: "Dumpweed", artist: "Blink 182")
-      expect(DB[:conn].execute("SELECT * FROM songs")).to eq([[1, "Dumpweed", "Blink 182"]])
+      expect(DB[:conn].execute("SELECT * FROM songs")).to eq([{"id": 1, "name": "Dumpweed", "artist": "Blink 182" }])
     end
     it 'returns the new object' do
       song = Song.create(name: "Hey Jude", artist: "Beatles")
@@ -80,5 +80,5 @@ describe "Song" do
       table = Song.table_name
       expect(table).to eq("songs")
     end
-  end 
+  end
 end
