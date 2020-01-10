@@ -53,9 +53,12 @@ describe "Song" do
       Song.create_table
       longview.save
       expect(longview.id).to eq(1)
+        #binding.pry
+      expect(DB[:conn].execute("SELECT * FROM songs")[0]['name']).to eq("Longview")
+      expect(DB[:conn].execute("SELECT * FROM songs")[0]['artist']).to eq("Green Day")
+      expect(DB[:conn].execute("SELECT * FROM songs")[0]['id']).to eq(1)
+    end       #expect(DB[:conn].execute("SELECT * FROM songs").has_key?("name")).to eq([{'id' => 1 ,'name'=> "Longview", 'artist'=> "Green Day"}])
 
-      expect(DB[:conn].execute("SELECT * FROM songs")).to eq([[1,"Longview", "Green Day"]])
-    end
   end
 
   describe ".create" do
@@ -64,6 +67,7 @@ describe "Song" do
     end
     it 'takes a hash of attributes and creates new song object, uses save to save it to song table' do
       Song.create(name: "Dumpweed", artist: "Blink 182")
+      binding.pry
       expect(DB[:conn].execute("SELECT * FROM songs")).to eq([{"id": 1, "name": "Dumpweed", "artist": "Blink 182" }])
     end
     it 'returns the new object' do
