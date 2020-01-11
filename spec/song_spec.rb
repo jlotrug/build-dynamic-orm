@@ -67,8 +67,10 @@ describe "Song" do
     end
     it 'takes a hash of attributes and creates new song object, uses save to save it to song table' do
       Song.create(name: "Dumpweed", artist: "Blink 182")
-      binding.pry
-      expect(DB[:conn].execute("SELECT * FROM songs")).to eq([{"id": 1, "name": "Dumpweed", "artist": "Blink 182" }])
+      #binding.pry
+      expect(DB[:conn].execute("SELECT * FROM songs")[0]['id']).to eq(1)
+      expect(DB[:conn].execute("SELECT * FROM songs")[0]['name']).to eq('Dumpweed')
+      expect(DB[:conn].execute("SELECT * FROM songs")[0]['artist']).to eq("Blink 182")
     end
     it 'returns the new object' do
       song = Song.create(name: "Hey Jude", artist: "Beatles")

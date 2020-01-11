@@ -1,3 +1,6 @@
+require 'active_support/inflector'
+
+
 class Song
   attr_accessor :name, :artist
   attr_reader :id
@@ -43,7 +46,7 @@ class Song
   end
 
   def self.table_name
-    self.to_s.downcase + "s"
+    self.to_s.downcase.pluralize
   end
 
 
